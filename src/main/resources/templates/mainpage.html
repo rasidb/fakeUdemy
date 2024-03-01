@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>fake udemy</title>
+</head>
+<body>
+<div th:each="each : ${courses}">
+    <div >
+        <span th:text="${each.title}"></span>
+        <br>
+        <a th:href="@{/kursaGit(kursId=${each.id})}"> kursa git</a>
+    </div>
+</div>
+</body>
+</html>
