@@ -5,9 +5,10 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Table(name = "instructor")
 @Entity
+@Table(name = "Instructor")
 public class Instructor {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -22,13 +23,16 @@ public class Instructor {
     @Column(name = "email")
     private String email;
 
-    @JoinColumn(name = "instructor_detail_id")
     @OneToOne(cascade = CascadeType.ALL)
+    //@OneToOne -> tek yönlü olarak Instructor'dan InstructorDetail'e gider tersi yönde iliski kurulamaz //Cascade.ALL tüm işlemlere izin verir delete, add vb.
+    @JoinColumn(name = "instructor_detail_id")
     private InstructorDetail instructorDetail;
 
+    //mappedBy="instructor" -> Course sınıfındaki instructor objesi
     @OneToMany(fetch = FetchType.LAZY,
             mappedBy = "instructor",
-            cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.PERSIST, CascadeType.REMOVE})
+            cascade = { CascadeType.DETACH, CascadeType.MERGE,
+                    CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Course> courses;
 
     public Instructor() {
@@ -43,6 +47,7 @@ public class Instructor {
     public int getId() {
         return id;
     }
+
 
     public void setId(int id) {
         this.id = id;
@@ -88,21 +93,16 @@ public class Instructor {
         this.courses = courses;
     }
 
-    //bu method eğitmene kurs ekleme isini kolaylaştırmak için yapıldı
+    //add convenience method for bi-directional relationship
     public void add(Course course) {
-        if (courses == null)
-            courses = new ArrayList<>();
-        courses.add(course);
+        if (this.courses == null)
+            this.courses = new ArrayList<>();
+        this.courses.add(course);
+        course.setInstructor(this);
     }
 
     @Override
     public String toString() {
-        return "Student{" +
-                "id=" + id +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                ", instructor detail='" + instructorDetail + '\'' +
-                '}';
+        return "Instructor{" + "id=" + id + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", email='" + email + '\'' + ", instructorDetail=" + instructorDetail + '}';
     }
 }

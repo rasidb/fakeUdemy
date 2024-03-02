@@ -18,21 +18,25 @@ public class Student {
     private String lastName;
     @Column(name = "email")
     private String email;
-    @Column(name = "role")
-    private String role;
+
+   // @Column(name = "role")
+    //private String role;
+
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH, CascadeType.PERSIST})
     @JoinTable(name = "course_student",
             joinColumns = @JoinColumn(name = "student_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
     private List<Course> courses;
-public Student (){}
-    public Student(String firstName, String lastName, String email,String role)
-    {
+
+    public Student() {
+    }
+
+    public Student(String firstName, String lastName, String email, String role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.role=role;
+       // this.role = role;
     }
 
     // öğrenciye kurs eklemek için
@@ -41,6 +45,14 @@ public Student (){}
             courses = new ArrayList<>();
         courses.add(course);
     }
+
+    //public String getRole() {
+    //    return role;
+    //}
+
+    //public void setRole(String role) {
+    //    this.role = role;
+    //}
 
     public int getId() {
         return id;

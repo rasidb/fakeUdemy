@@ -2,14 +2,53 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>fake udemy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses</title>
+    <style>
+        .course-container {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); /* 5 sütun olacak şekilde ayarlanmıştır */
+            gap: 20px; /* Kartlar arasındaki boşluk */
+        }
+
+        .course-card {
+            border: 1px solid #dddddd;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .course-card:hover {
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+
+        .course-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .course-image {
+            width: 100%; /* Resmin kartın genişliğine sığacak şekilde ayarlanması */
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .course-link {
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
 </head>
 <body>
-<div th:each="each : ${courses}">
-    <div >
-        <span th:text="${each.title}"></span>
-        <br>
-        <a th:href="@{/kursaGit(kursId=${each.id})}"> kursa git</a>
+<div class="course-container">
+    <div th:each="each : ${courses}" class="course-card">
+        <div><img class="course-image" th:src="@{/images/fotograf.jpg}" alt="Course Image"></div>
+        <div class="course-title" th:text="${each.title}"></div>
+        <div><a class="course-link" th:href="@{/kursaGit(kursId=${each.id})}">kursa git</a></div>
     </div>
 </div>
 </body>

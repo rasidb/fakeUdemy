@@ -12,6 +12,11 @@ public class Review {
     @Column(name = "comment")
     private String comment;
 
+    public Review(String comment) {
+
+    }
+    public Review(){}
+
     public int getId() {
         return id;
     }
